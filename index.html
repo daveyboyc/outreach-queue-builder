@@ -642,24 +642,32 @@ Worth a quick intro call?`
       "energy", "procurement", "utilities"
     ];
 
-    function inferTeam(jobTitle) {
+    function inferTeam(jobTitle, relevanceNote, decisionRole) {
       const title = String(jobTitle || "").toLowerCase().replace(/\s+/g, " ").trim();
+      const note = String(relevanceNote || "").toLowerCase().replace(/\s+/g, " ").trim();
+      const role = String(decisionRole || "").toLowerCase().trim();
       if (!title) return "";
 
       if (/(^|\s)(energy|net zero|sustainability)(\s|$)/.test(title)) return "energy";
       if (/(procurement|purchasing|strategic sourcing|category manager)/.test(title)) return "procurement";
+      if (note.includes("procurement")) return "procurement";
       if (/(utilities manager|utility manager|utilities engineer|utility engineer)/.test(title)) return "utilities";
       if (/(estates|facilities|capital projects)/.test(title)) return "estates / facilities";
       if (/(engineering|engineer|maintenance|technical|technology|technologist|control systems|process|overhaul|mechanical|project)/.test(title)) return "engineering";
       if (/(operations|operational|plant|site |shift|works manager|manufacturing|production|supply chain|converting|asset manager|quality assurance)/.test(title)) return "operations";
       if (/(chief|director|ceo|general manager|regional manager|managing|vice president|\bvp\b|founder|owner)/.test(title)) return "leadership";
+      if (role === "economic_sponsor") return "leadership";
       return "operations";
     }
 
     function resolveTeam(row, jobTitle) {
       const explicit = firstValue(row, ["team", "team_category", "outreach_team"]).toLowerCase().trim();
       if (TEAM_VALUES.includes(explicit)) return explicit;
-      return inferTeam(jobTitle);
+      return inferTeam(
+        jobTitle,
+        firstValue(row, ["relevance_note", "confidence_note"]),
+        firstValue(row, ["decision_role", "stakeholder_role"])
+      );
     }
 
     function teamPhrase(team) {
