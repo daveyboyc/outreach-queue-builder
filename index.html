@@ -354,7 +354,7 @@
       </div>
 
       <label for="contactsCsv">Contacts CSV</label>
-      <textarea id="contactsCsv">company_name,original_account_name,full_name,first_name,last_name,job_title,linkedin_url,work_email,personal_email,phone</textarea>
+      <textarea id="contactsCsv">company_name,original_account_name,full_name,first_name,last_name,job_title,team,linkedin_url,work_email,personal_email,phone</textarea>
 
       <button onclick="loadContacts()">Load contacts</button>
       <button class="ghost" onclick="clearSavedData()">Clear saved queue</button>
@@ -366,36 +366,36 @@
 
       <label for="emailTemplateSelect">Email template</label>
       <select id="emailTemplateSelect" onchange="applyEmailTemplateSelection()">
-        <option value="team_intro">Forecaster — team intro</option>
-        <option value="standard">Forecaster — standard</option>
-        <option value="short">Forecaster — short</option>
+        <option value="team_intro">Capacity Market — team introduction</option>
+        <option value="standard">Capacity Market — standard</option>
+        <option value="short">Capacity Market — short</option>
         <option value="custom">Custom</option>
       </select>
 
       <label for="subjectTemplate">Subject</label>
-      <input id="subjectTemplate" value="AI price forecasting for energy markets" />
+      <input id="subjectTemplate" value="Capacity Market revenue from existing site flexibility" />
 
       <label for="bodyTemplate">Body</label>
       <textarea id="bodyTemplate">Hi {{firstName}},
 
-I have been trying to get in contact to make an intro. I see you are on {{teamPhrase}}.
+I'm reaching out to make an introduction, as I can see you're part of the {{teamPhrase}} at {{company}}.
 
-I wanted to briefly introduce our Forecaster platform.
+There may be a straightforward way for your site to earn revenue through the Capacity Market using flexibility that may already be available.
 
-It uses ML to forecast energy market prices every 5 minutes, up to 7 days ahead, helping teams optimise trading decisions for BESS, solar PV and flexible loads.
+This does not usually mean switching off the whole site or installing new hardware. In many cases, it is about identifying load, backup generation or equipment that could be reduced for short periods if needed.
 
-Forecaster is currently showing 16% higher average accuracy than EnAppSys forecasts.
+We can assess this remotely using half-hourly meter data, so there is no need for an initial site visit simply to understand the opportunity.
 
-We would be happy to backtest your portfolio against historical market data to show what our Forecaster platform could have generated for you.
+The aim is to establish what capacity you could realistically offer, support the registration, and manage the testing and compliance requirements so it does not become a burden for your team.
 
-Can we set up a call to discuss?
+Would you be open to a short call to see whether there may be an opportunity?
 
 Kind regards,
 David</textarea>
 
       <p class="small">
-        Key placeholders: <code>{{firstName}}</code>, <code>{{company}}</code>, <code>{{team}}</code> (<code>data science</code> / <code>trading</code> / <code>leadership</code>),
-        <code>{{teamPhrase}}</code> (e.g. <code>the data science team</code>), <code>{{teamSentence}}</code> (e.g. <code>I see you are on the trading team.</code>).
+        Key placeholders: <code>{{firstName}}</code>, <code>{{company}}</code>, <code>{{team}}</code> (<code>engineering</code>, <code>operations</code>, <code>leadership</code>, <code>estates / facilities</code>, <code>energy</code>, <code>procurement</code>, or <code>utilities</code>),
+        <code>{{teamPhrase}}</code> (e.g. <code>engineering team</code>), and <code>{{teamSentence}}</code> (e.g. <code>I can see you're part of the operations team.</code>).
         Also <code>{{fullName}}</code>, <code>{{jobTitle}}</code>, <code>{{email}}</code>, <code>{{linkedinUrl}}</code>, and any CSV column.
         Team is inferred from job title when you load contacts. Pick a preset or choose <strong>Custom</strong> and edit — edits auto-save to Custom.
       </p>
@@ -422,29 +422,27 @@ David</textarea>
         <div>
           <label for="linkedinTemplateSelect">LinkedIn template</label>
           <select id="linkedinTemplateSelect" onchange="applyLinkedInTemplateSelection()">
-            <option value="team_intro">Team intro — email blast copy</option>
-            <option value="standard">Standard</option>
+            <option value="team_intro">Capacity Market — team introduction</option>
+            <option value="standard">Capacity Market — short</option>
             <option value="custom">Custom</option>
           </select>
           <label for="linkedinMessageTemplate">LinkedIn message</label>
           <textarea id="linkedinMessageTemplate">Hi {{firstName}},
 
-I have been trying to get in contact to make an intro. I see you are on {{teamPhrase}}.
+I'm reaching out to make an introduction, as I can see you're part of the {{teamPhrase}} at {{company}}.
 
-I wanted to briefly introduce our Forecaster platform.
+There may be a straightforward way for your site to earn revenue through the Capacity Market using flexibility that may already be available.
 
-It uses ML to forecast energy market prices every 5 minutes, up to 7 days ahead, helping teams optimise trading decisions for BESS, solar PV and flexible loads.
+This does not usually mean switching off the whole site or installing new hardware. In many cases, it is about identifying load, backup generation or equipment that could be reduced for short periods if needed.
 
-Forecaster is currently showing 16% higher average accuracy than EnAppSys forecasts.
+We can assess the initial opportunity remotely using half-hourly meter data.
 
-We would be happy to backtest your portfolio against historical market data to show what our Forecaster platform could have generated for you.
-
-Can we set up a call to discuss?</textarea>
+Would you be open to a short call to see whether there may be an opportunity?</textarea>
         </div>
       </div>
 
       <label for="crmActivityTemplate">CRM activity note</label>
-      <textarea id="crmActivityTemplate">Sent {{firstName}} a Forecaster cold email.</textarea>
+      <textarea id="crmActivityTemplate">Sent {{firstName}} a Capacity Market introduction email.</textarea>
 
       <button class="secondary" onclick="openSalesNavList()">Open Sales Nav list</button>
       <button onclick="exportCrmAutomationCsv()">Export CRM automation queue</button>
@@ -475,67 +473,65 @@ Can we set up a call to discuss?</textarea>
   <script>
     const STORAGE_KEYS = {
       contactsCsv: "outreachBatchContactsCsvV2",
-      subject: "outreachBatchSubjectV2",
-      body: "outreachBatchBodyV2",
+      subject: "outreachBatchSubjectV3",
+      body: "outreachBatchBodyV3",
       actions: "outreachBatchActionLogV2",
       salesNavListUrl: "outreachBatchSalesNavListUrlV3",
-      activityTemplate: "outreachBatchActivityTemplateV3",
-      liTemplate: "outreachBatchLinkedInTemplateV2",
-      emailTemplateId: "outreachBatchEmailTemplateIdV1",
-      linkedinTemplateId: "outreachBatchLinkedInTemplateIdV1",
-      customEmailSubject: "outreachBatchCustomEmailSubjectV1",
-      customEmailBody: "outreachBatchCustomEmailBodyV1",
-      customLinkedInBody: "outreachBatchCustomLinkedInBodyV1",
+      activityTemplate: "outreachBatchActivityTemplateV4",
+      liTemplate: "outreachBatchLinkedInTemplateV3",
+      emailTemplateId: "outreachBatchEmailTemplateIdV2",
+      linkedinTemplateId: "outreachBatchLinkedInTemplateIdV2",
+      customEmailSubject: "outreachBatchCustomEmailSubjectV2",
+      customEmailBody: "outreachBatchCustomEmailBodyV2",
+      customLinkedInBody: "outreachBatchCustomLinkedInBodyV2",
       lastContactId: "outreachBatchLastContactIdV1"
     };
 
     const EMAIL_TEMPLATE_PRESETS = {
       team_intro: {
-        label: "Forecaster — team intro",
-        subject: "AI price forecasting for energy markets",
+        label: "Capacity Market — team introduction",
+        subject: "Capacity Market revenue from existing site flexibility",
         body: `Hi {{firstName}},
 
-I have been trying to get in contact to make an intro. I see you are on {{teamPhrase}}.
+I'm reaching out to make an introduction, as I can see you're part of the {{teamPhrase}} at {{company}}.
 
-I wanted to briefly introduce our Forecaster platform.
+There may be a straightforward way for your site to earn revenue through the Capacity Market using flexibility that may already be available.
 
-It uses ML to forecast energy market prices every 5 minutes, up to 7 days ahead, helping teams optimise trading decisions for BESS, solar PV and flexible loads.
+This does not usually mean switching off the whole site or installing new hardware. In many cases, it is about identifying load, backup generation or equipment that could be reduced for short periods if needed.
 
-Forecaster is currently showing 16% higher average accuracy than EnAppSys forecasts.
+We can assess this remotely using half-hourly meter data, so there is no need for an initial site visit simply to understand the opportunity.
 
-We would be happy to backtest your portfolio against historical market data to show what our Forecaster platform could have generated for you.
+The aim is to establish what capacity you could realistically offer, support the registration, and manage the testing and compliance requirements so it does not become a burden for your team.
 
-Can we set up a call to discuss?
+Would you be open to a short call to see whether there may be an opportunity?
 
 Kind regards,
 David`
       },
       standard: {
-        label: "Forecaster — standard",
-        subject: "AI price forecasting for energy markets",
+        label: "Capacity Market — standard",
+        subject: "Capacity Market revenue from existing site flexibility",
         body: `Hi {{firstName}},
 
-I wanted to briefly introduce our Forecaster platform.
+There may be a straightforward way for your site to earn revenue through the Capacity Market using flexibility that may already be available.
 
-It uses ML to forecast energy market prices every 5 minutes, up to 7 days ahead, helping teams optimise trading decisions for BESS, solar PV and flexible loads.
+This does not usually mean switching off the whole site or installing new hardware. In many cases, it is about identifying load, backup generation or equipment that could be reduced for short periods if needed.
 
-Forecaster is currently showing 16% higher average accuracy than EnAppSys forecasts.
+We can assess the initial opportunity remotely using half-hourly meter data and manage the registration, testing and compliance requirements if there is a viable opportunity.
 
-We would be happy to backtest your portfolio against historical market data to show what our Forecaster platform could have generated for you.
-
-Can we set up a call to discuss?
+Would you be open to a short call to see whether there may be a fit?
 
 Kind regards,
 David`
       },
       short: {
-        label: "Forecaster — short",
-        subject: "GridBeyond Forecaster — quick intro?",
+        label: "Capacity Market — short",
+        subject: "Capacity Market opportunity at {{company}}",
         body: `Hi {{firstName}},
 
-{{teamSentence}} At {{company}}, you might find GridBeyond's Forecaster useful — ML price forecasts every 5 minutes, up to 7 days ahead.
+I'm reaching out because your role in the {{teamPhrase}} at {{company}} may give you visibility of existing site flexibility that could earn Capacity Market revenue.
 
-Worth a 15-minute intro?
+Would you be open to a short introductory call?
 
 Kind regards,
 David`
@@ -544,26 +540,24 @@ David`
 
     const LINKEDIN_TEMPLATE_PRESETS = {
       team_intro: {
-        label: "Team intro — email blast copy",
+        label: "Capacity Market — team introduction",
         body: `Hi {{firstName}},
 
-I have been trying to get in contact to make an intro. I see you are on {{teamPhrase}}.
+I'm reaching out to make an introduction, as I can see you're part of the {{teamPhrase}} at {{company}}.
 
-I wanted to briefly introduce our Forecaster platform.
+There may be a straightforward way for your site to earn revenue through the Capacity Market using flexibility that may already be available.
 
-It uses ML to forecast energy market prices every 5 minutes, up to 7 days ahead, helping teams optimise trading decisions for BESS, solar PV and flexible loads.
+This does not usually mean switching off the whole site or installing new hardware. It is generally about identifying load, backup generation or equipment that could be reduced for short periods if needed.
 
-Forecaster is currently showing 16% higher average accuracy than EnAppSys forecasts.
+We can assess the initial opportunity remotely using half-hourly meter data.
 
-We would be happy to backtest your portfolio against historical market data to show what our Forecaster platform could have generated for you.
-
-Can we set up a call to discuss?`
+Would you be open to a short call to see whether there may be an opportunity?`
       },
       standard: {
-        label: "Standard",
+        label: "Capacity Market — short",
         body: `Hi {{firstName}},
 
-I wanted to briefly introduce GridBeyond's Forecaster — an ML price forecasting tool for energy trading and optimisation.
+There may be a way for {{company}} to earn Capacity Market revenue from existing site flexibility, without an upfront hardware project.
 
 Worth a quick intro call?`
       }
@@ -643,65 +637,40 @@ Worth a quick intro call?`
       return "";
     }
 
-    const LEADERSHIP_KEYWORDS = [
-      "ceo", "cto", "chief executive", "chief technology", "chief commercial",
-      "founder", "co-owner", "managing director", "president", "chief officer"
-    ];
-    const TRADING_KEYWORDS = [
-      "trader", "trading", "power trader", "energy trader", "quant trader",
-      "head of trading", "prompt trading", "algorithmic trading"
-    ];
-    const DATA_SCIENCE_KEYWORDS = [
-      "data scientist", "data science", "ml engineer", "machine learning",
-      "quant researcher", "quantitative researcher", "forecasting", "head of data science"
+    const TEAM_VALUES = [
+      "engineering", "operations", "leadership", "estates / facilities",
+      "energy", "procurement", "utilities"
     ];
 
     function inferTeam(jobTitle) {
       const title = String(jobTitle || "").toLowerCase().replace(/\s+/g, " ").trim();
       if (!title) return "";
 
-      for (const keyword of LEADERSHIP_KEYWORDS) {
-        if (title.includes(keyword)) return "leadership";
-      }
-
-      if (title.includes("head of data science")) return "data science";
-      if (title.includes("head of trading")) return "trading";
-      if (title.startsWith("head of")) {
-        if (title.includes("optim") || title.includes("commercial") || title.includes("algorithmic")) {
-          return "leadership";
-        }
-        return "leadership";
-      }
-
-      for (const keyword of TRADING_KEYWORDS) {
-        if (title.includes(keyword)) return "trading";
-      }
-      for (const keyword of DATA_SCIENCE_KEYWORDS) {
-        if (title.includes(keyword)) return "data science";
-      }
-
-      if (title.includes("quant") && !title.includes("trader")) return "data science";
-      if (title.includes("data") || title.includes("analyst")) return "data science";
-
-      return "trading";
+      if (/(^|\s)(energy|net zero|sustainability)(\s|$)/.test(title)) return "energy";
+      if (/(procurement|purchasing|strategic sourcing|category manager)/.test(title)) return "procurement";
+      if (/(utilities manager|utility manager|utilities engineer|utility engineer)/.test(title)) return "utilities";
+      if (/(estates|facilities|capital projects)/.test(title)) return "estates / facilities";
+      if (/(engineering|engineer|maintenance|technical|technology|technologist|control systems|process|overhaul|mechanical|project)/.test(title)) return "engineering";
+      if (/(operations|operational|plant|site |shift|works manager|manufacturing|production|supply chain|converting|asset manager|quality assurance)/.test(title)) return "operations";
+      if (/(chief|director|ceo|general manager|regional manager|managing|vice president|\bvp\b|founder|owner)/.test(title)) return "leadership";
+      return "operations";
     }
 
     function resolveTeam(row, jobTitle) {
       const explicit = firstValue(row, ["team", "team_category", "outreach_team"]).toLowerCase().trim();
-      if (["leadership", "trading", "data science"].includes(explicit)) return explicit;
+      if (TEAM_VALUES.includes(explicit)) return explicit;
       return inferTeam(jobTitle);
     }
 
     function teamPhrase(team) {
-      if (team === "leadership") return "the leadership team";
-      if (team === "data science") return "the data science team";
-      if (team === "trading") return "the trading team";
-      return "your team";
+      if (team === "estates / facilities") return "estates and facilities team";
+      if (TEAM_VALUES.includes(team)) return team + " team";
+      return "relevant team";
     }
 
     function teamSentence(team) {
       if (!team) return "";
-      return "I see you are on " + teamPhrase(team) + ".";
+      return "I can see you're part of the " + teamPhrase(team) + ".";
     }
 
     function splitFullName(fullName) {
