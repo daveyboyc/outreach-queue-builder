@@ -473,17 +473,17 @@ Could we set up a call to discuss?</textarea>
   <script>
     const STORAGE_KEYS = {
       contactsCsv: "outreachBatchContactsCsvV2",
-      subject: "outreachBatchSubjectV3",
-      body: "outreachBatchBodyV3",
+      subject: "outreachBatchSubjectV4",
+      body: "outreachBatchBodyV4",
       actions: "outreachBatchActionLogV2",
       salesNavListUrl: "outreachBatchSalesNavListUrlV3",
       activityTemplate: "outreachBatchActivityTemplateV4",
-      liTemplate: "outreachBatchLinkedInTemplateV3",
-      emailTemplateId: "outreachBatchEmailTemplateIdV2",
-      linkedinTemplateId: "outreachBatchLinkedInTemplateIdV2",
-      customEmailSubject: "outreachBatchCustomEmailSubjectV2",
-      customEmailBody: "outreachBatchCustomEmailBodyV2",
-      customLinkedInBody: "outreachBatchCustomLinkedInBodyV2",
+      liTemplate: "outreachBatchLinkedInTemplateV4",
+      emailTemplateId: "outreachBatchEmailTemplateIdV3",
+      linkedinTemplateId: "outreachBatchLinkedInTemplateIdV3",
+      customEmailSubject: "outreachBatchCustomEmailSubjectV3",
+      customEmailBody: "outreachBatchCustomEmailBodyV3",
+      customLinkedInBody: "outreachBatchCustomLinkedInBodyV3",
       lastContactId: "outreachBatchLastContactIdV1"
     };
 
@@ -921,11 +921,14 @@ Could we set up a call to discuss?`
       // Use Outlook web directly so browser automation can retain control;
       // native mailto handlers may hand the compose window to desktop Outlook.
       const parsed = new URL(mailtoLink);
-      const compose = new URL("https://outlook.office.com/mail/deeplink/compose");
-      compose.searchParams.set("to", decodeURIComponent(parsed.pathname));
-      compose.searchParams.set("subject", parsed.searchParams.get("subject") || "");
-      compose.searchParams.set("body", parsed.searchParams.get("body") || "");
-      window.open(compose.toString(), "_blank", "noopener,noreferrer");
+      const to = decodeURIComponent(parsed.pathname);
+      const subject = parsed.searchParams.get("subject") || "";
+      const body = parsed.searchParams.get("body") || "";
+      const composeUrl = "https://outlook.office.com/mail/deeplink/compose"
+        + "?to=" + encodeURIComponent(to)
+        + "&subject=" + encodeURIComponent(subject)
+        + "&body=" + encodeURIComponent(body);
+      window.open(composeUrl, "_blank", "noopener,noreferrer");
     }
 
     function escapeHtml(text) {
