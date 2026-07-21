@@ -331,6 +331,7 @@
 
       <div class="info">
         Load the reviewed Forecaster follow-up CSV. Exclude replies, hard bounces, departures, and contacts whose out-of-office follow-up date has not arrived.
+        The selected file is processed locally in this browser and is not uploaded to GitHub.
       </div>
 
       <div class="row two">
@@ -353,9 +354,7 @@
       </div>
 
       <label for="contactsCsv">Contacts CSV</label>
-      <textarea id="contactsCsv">company_name,original_account_name,full_name,first_name,last_name,job_title,linkedin_url,work_email,personal_email,phone
-Example Energy Ltd,Example Energy,Alex Morgan,Alex,Morgan,Power Trader,https://www.linkedin.com/in/example-alex-morgan,alex@example.com,,+44 00 0000 0000
-Sample Trading,Sample Trading,Jordan Lee,Jordan,Lee,Head of Data Science,https://www.linkedin.com/in/example-jordan-lee,jordan@example.com,,</textarea>
+      <textarea id="contactsCsv">company_name,original_account_name,full_name,first_name,last_name,job_title,team,linkedin_url,work_email,personal_email,phone</textarea>
 
       <button onclick="loadContacts()">Load contacts</button>
       <button class="ghost" onclick="clearSavedData()">Clear saved queue</button>
